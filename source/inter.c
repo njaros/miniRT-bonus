@@ -6,7 +6,7 @@
 /*   By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:52:15 by njaros            #+#    #+#             */
-/*   Updated: 2022/07/20 16:06:45 by njaros           ###   ########lyon.fr   */
+/*   Updated: 2022/07/20 16:28:16 by njaros           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ bool	set_ex_s(t_inter *inter, t_line l, t_sp s, float mu)
 		inter->normal = crea_vector(inter->point, s.coord);
 	else
 		inter->normal = crea_vector(s.coord, inter->point);
-	//ft_vec_normalization(&inter->normal);
 	inter->object = SPHERE;
 	return (1);
 }

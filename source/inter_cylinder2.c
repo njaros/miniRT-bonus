@@ -6,7 +6,7 @@
 /*   By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:22:32 by njaros            #+#    #+#             */
-/*   Updated: 2022/07/20 13:38:46 by njaros           ###   ########lyon.fr   */
+/*   Updated: 2022/07/20 16:27:59 by njaros           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ bool	min_mu(t_inter *i, t_line l, t_cy cy, float mu)
 
 	i->dist -= mu;
 	if (!cyl_plan_dist(l, cy, &d_pu, &d_pd)
-		&& (side_plan_c(cy.plan_up, l.point) ^ side_plan_c(cy.plan_down, l.point)))
+		&& (side_plan_c(cy.plan_up, l.point)
+			^ side_plan_c(cy.plan_down, l.point)))
 		return (1);
 	if ((d_pu < d_pd && d_pd < i->dist) \
 		|| (d_pd < d_pu && d_pu < i->dist))

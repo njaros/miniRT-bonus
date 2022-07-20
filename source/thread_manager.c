@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   thread_manager.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/20 16:25:31 by njaros            #+#    #+#             */
+/*   Updated: 2022/07/20 16:25:31 by njaros           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 void	init_cpu_task(t_pixel_task *pxt, int h, int l)
@@ -58,7 +70,7 @@ void	thread_manager(t_var *m)
 		if (m->to_do_list.rdy_count == m->nb_cpu)
 		{
 			m->to_do_list.rdy_count = 0;
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&m->to_do_list.sleep);
 	}
@@ -69,7 +81,7 @@ void	thread_manager(t_var *m)
 		{
 			m->to_do_list.work_finished = 0;
 			pthread_mutex_unlock(&m->to_do_list.work);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&m->to_do_list.work);
 	}

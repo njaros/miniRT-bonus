@@ -6,7 +6,7 @@
 /*   By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 14:52:41 by jrinna            #+#    #+#             */
-/*   Updated: 2022/07/01 14:49:15 by njaros           ###   ########lyon.fr   */
+/*   Updated: 2022/07/20 16:26:20 by njaros           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static void	ft_init_camera(t_var *m, char *s)
 	m->ele.struc_c.vec.z = 0;
 	m->ele.struc_c.fov = ft_atof(split[3]);
 	m->ele.struc_c.angle_z = -asin(ft_atof(split_normal[2]) + 0.0001);
-	m->ele.struc_c.angle_x = atan2(ft_atof(split_normal[1]) + 0.0001, ft_atof(split_normal[0]) + 0.0001);
+	m->ele.struc_c.angle_x = atan2(ft_atof(split_normal[1]) + 0.0001,
+			ft_atof(split_normal[0]) + 0.0001);
 	ft_mat_mat(ft_mat_rotz(m->ele.struc_c.angle_x),
 		ft_mat_roty(m->ele.struc_c.angle_z), &m->mat_rot);
 	ft_free_split(split);
