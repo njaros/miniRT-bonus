@@ -6,7 +6,7 @@
 /*   By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:52:15 by njaros            #+#    #+#             */
-/*   Updated: 2022/07/20 14:09:19 by njaros           ###   ########lyon.fr   */
+/*   Updated: 2022/07/20 16:06:45 by njaros           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	set_ex_s(t_inter *inter, t_line l, t_sp s, float mu)
 	inter->exist = 1;
 	inter->color = s.color;
 	inter->point = set_pointline(l, inter->dist + mu);
-	if (inter->dist < (s.diam / 2))
+	if (mu > 0)
 		inter->normal = crea_vector(inter->point, s.coord);
 	else
 		inter->normal = crea_vector(s.coord, inter->point);
