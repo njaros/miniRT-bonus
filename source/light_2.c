@@ -6,7 +6,7 @@
 /*   By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:50:05 by jrinna            #+#    #+#             */
-/*   Updated: 2022/07/01 15:36:52 by njaros           ###   ########lyon.fr   */
+/*   Updated: 2022/07/20 15:57:29 by njaros           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ bool	check_light_inter_sph(t_var *m, t_line l, float coef)
 	int		n;
 	t_inter	tool;
 	t_sp	s;
+	float	dist;
 
 	n = m->ele.sp;
 	while (n)
 	{
 		s = m->ele.struc_sp[n - 1];
-		if (secure_glitch_sphere(s, l.point) || ((in_sphere
-					(s, m->ele.struc_c.coord) ^ in_sphere(s, l.point))))
+		if (secure_glitch_sphere(s, l.point, &dist) || ((in_sphere
+					(s, m->ele.struc_c.coord) ^ in_sphere_mem(dist))))
 			return (1);
 		tool = inter_sphere(l, s);
 		if (tool.exist && (tool.dist - coef < -0.0001))
@@ -38,7 +39,7 @@ bool	in_cylinder(t_cy c, t_coord point)
 	float	proj;
 	t_vec	tool;
 
-	if (side_plan(c.plan_down, point) && side_plan(c.plan_up, point))
+	if (side_plan_c(c.plan_down, point) && side_plan_c(c.plan_up, point))
 	{
 		tool = find_normal_line(cy_line(c), point, &proj);
 		proj = ft_square_length(tool);
@@ -52,9 +53,11 @@ bool	secure_glitch_cylinder(t_cy c, t_coord point)
 {
 	float	proj;
 	t_vec	tool;
+	float	dist_d;
+	float	dist_u;
 
-	if (secure_glitch_plan(c.plan_up, point)
-		|| secure_glitch_plan(c.plan_down, point))
+	if (secure_glitch_plan(c.plan_up, point, &dist_u)
+		|| secure_glitch_plan(c.plan_down, point, &dist_d))
 	{
 		tool = find_normal_line(cy_line(c), point, &proj);
 		proj = ft_square_length(tool);
@@ -62,7 +65,7 @@ bool	secure_glitch_cylinder(t_cy c, t_coord point)
 			return (1);
 		return (0);
 	}
-	if (side_plan(c.plan_down, point) && side_plan(c.plan_up, point))
+	if (side_plan(dist_d) && side_plan(dist_u))
 	{
 		tool = find_normal_line(cy_line(c), point, &proj);
 		proj = ft_square_length(tool) - (c.diam * c.diam / 4);

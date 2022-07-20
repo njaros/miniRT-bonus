@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrinna <jrinna@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:33:32 by jrinna            #+#    #+#             */
-/*   Updated: 2022/06/30 12:26:29 by jrinna           ###   ########lyon.fr   */
+/*   Updated: 2022/07/11 09:56:38 by njaros           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_vec_init(t_var *m)
 	m->vec = ft_calloc(m->win.lenght * m->win.height, sizeof(t_vec));
 	if (!m->vec)
 		ft_error(m, 5);
+	init_shared_data(m);
 	d = m->win.lenght * (cos((m->ele.struc_c.fov / 2) * 2 * PI / 360)
 			/ sin((m->ele.struc_c.fov / 2) * 2 * PI / 360));
 	i = 0;

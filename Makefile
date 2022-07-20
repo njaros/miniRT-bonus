@@ -6,12 +6,12 @@
 #    By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/24 12:55:39 by jrinna            #+#    #+#              #
-#    Updated: 2022/07/01 17:45:53 by njaros           ###   ########lyon.fr    #
+#    Updated: 2022/07/20 14:10:18 by njaros           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 #### LIST ####
-LST_SRC := atof.c calloc.c camera.c change_object_1.c change_object_2.c color.c color_2.c error.c get_file.c imput_1.c imput_2.c init.c inter.c inter_checker.c inter_cylinder.c inter_cylinder2.c light.c light_2.c light_3.c matrix.c miniRT.c parsing.c parsing_check_object_1.c parsing_check_object_2.c parsing_check_str_1.c parsing_check_str_2.c parsing_init_object_1.c parsing_init_object_2.c pixel_render.c reflexion_formula.c setUsefullMatrix.c split.c utils_1.c utils_2.c vec_operation.c vector_formula.c vector_formula3.c vector_formula_2.c 
+LST_SRC := atof.c calloc.c camera.c change_object_1.c change_object_2.c color.c color_2.c error.c get_file.c imput_1.c imput_2.c init.c inter.c inter_checker.c inter_cylinder.c inter_cylinder2.c light.c light_2.c light_3.c matrix.c miniRT.c parsing.c parsing_check_object_1.c parsing_check_object_2.c parsing_check_str_1.c parsing_check_str_2.c parsing_init_object_1.c parsing_init_object_2.c pixel_render.c reflexion_formula.c setUsefullMatrix.c split.c thread_manager.c thread_routine.c utils_1.c utils_2.c vec_operation.c vector_formula.c vector_formula3.c vector_formula_2.c 
 LST_OBJ := $(LST_SRC:.c=.o)
 LST_INC := miniRT.h 
 LST_MLX := libmlx.a
@@ -34,7 +34,7 @@ MLX := $(addprefix $(DIR_MLX)/,$(LST_MLX))
 
 #### OTHER ####
 CC := gcc
-CFLAGS := -Ofast -march=native -Wall -Werror -Wextra
+CFLAGS := -O3 -Wall -Werror -Wextra
 CFRAM := -framework OpenGL -framework AppKit
 NAME := $(DIR_BIN)/miniRT
 #### OTHER ####

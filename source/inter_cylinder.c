@@ -6,7 +6,7 @@
 /*   By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:18:10 by njaros            #+#    #+#             */
-/*   Updated: 2022/07/01 13:58:53 by njaros           ###   ########lyon.fr   */
+/*   Updated: 2022/07/20 13:37:54 by njaros           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ t_line	cy_line(t_cy c)
 	return (l);
 }
 
+bool	side_plan_c(t_pl plan, t_coord point)
+{
+	if (ft_dot_product(plan.vec, crea_vector(point, plan.coord)) > 0)
+		return (1);
+	return (0);
+}
+
 bool	set_ex_c(t_inter *inter, t_line l, t_cy c)
 {
 	inter->exist = 1;
@@ -30,7 +37,7 @@ bool	set_ex_c(t_inter *inter, t_line l, t_cy c)
 		fill_inter_c(inter, c);
 	else if (inter->cyl_touch == 2)
 	{
-		if (side_plan(c.plan_up, l.point))
+		if (side_plan_c(c.plan_up, l.point))
 			inter->normal = c.plan_down.vec;
 		else
 			inter->normal = c.plan_up.vec;
@@ -38,7 +45,7 @@ bool	set_ex_c(t_inter *inter, t_line l, t_cy c)
 	}
 	else if (inter->cyl_touch == 3)
 	{
-		if (side_plan(c.plan_down, l.point))
+		if (side_plan_c(c.plan_down, l.point))
 			inter->normal = c.plan_up.vec;
 		else
 			inter->normal = c.plan_down.vec;

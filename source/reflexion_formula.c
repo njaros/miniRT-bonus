@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reflexion_formula.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrinna <jrinna@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 13:18:18 by njaros            #+#    #+#             */
-/*   Updated: 2022/06/30 11:07:46 by jrinna           ###   ########lyon.fr   */
+/*   Updated: 2022/07/20 15:33:58 by njaros           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ t_line	new_rt(t_line old_rt, t_inter i)
 	new.point = i.point;
 	new.dir = crea_vector(new.point, tool);
 	ft_vec_normalization(&new.dir);
-	modif_pointline(new, &new.point, 0.0001);
+	modif_pointline(new, &new.point, 0.001);
 	return (new);
 }

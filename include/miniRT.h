@@ -6,7 +6,7 @@
 /*   By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 13:19:13 by jrinna            #+#    #+#             */
-/*   Updated: 2022/07/11 09:34:27 by njaros           ###   ########lyon.fr   */
+/*   Updated: 2022/07/20 14:54:55 by njaros           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <stdbool.h>
+# include <pthread.h>
 
 # define PI 3.14159265358979323
 # define K_ESC 53
@@ -194,19 +195,43 @@ typedef struct s_win
 	int		height;
 }	t_win;
 
+typedef struct s_var t_var;
+
+typedef struct	s_pixel_task
+{
+	int				i;
+	int				j;
+	int				transit;
+	pthread_mutex_t	check;
+}	t_pixel_task;
+
+typedef struct	s_shared
+{
+	t_pixel_task	*to_do;
+	t_var			*m;
+	int				rdy_count;
+	bool			work_finished;
+	pthread_mutex_t	sleep;
+	pthread_mutex_t	work;
+}	t_shared;
+
 typedef struct s_var{
-	void	*init;
-	int		ref_num;
-	float	ref_coef;
-	t_img	img;
-	t_win	win;
-	t_color	amb;
-	t_color	shad;
-	t_color	refl;
-	t_color	color;
-	t_ele	ele;
-	t_vec	*vec;
-	t_mat	mat_rot;
+	void			*init;
+	int				ref_num;
+	float			ref_coef;
+	t_img			img;
+	t_win			win;
+	t_color			amb;
+	t_color			shad;
+	t_color			refl;
+	t_color			color;
+	t_ele			ele;
+	t_vec			*vec;
+	t_mat			mat_rot;
+	t_shared		to_do_list;
+	pthread_t		*cpu;
+	unsigned int	size;
+	int				nb_cpu;
 }	t_var;
 
 /* UTILS */
@@ -365,7 +390,7 @@ t_vec	find_normal_line(t_line l, t_coord a, float *dist);
 float	lines_normal_segment(t_line l1, t_line l2, t_inter *inter);
 float	distance_projection(t_line l, t_coord a);
 float	paralel_dist(t_line l1, t_line l2);
-bool	side_plan(t_pl plan, t_coord point);
+bool	side_plan(float dist);
 /* VEC */
 /* MATRIX */
 void	ft_mat_vec(t_vec ov, t_mat mat, t_vec *nv);
@@ -386,6 +411,7 @@ bool	min_mu(t_inter *i, t_line l, t_cy cy, float mu);
 bool	plus_mu(t_inter *i, t_line l, t_cy cy, float mu);
 t_inter	inter_cylinder(t_line l, t_cy cy);
 t_inter	inter_checker(t_line l, t_ele e);
+bool	side_plan_c(t_pl plan, t_coord point);
 t_inter	check_inter_sphere(int nb, t_sp *s, t_line l, t_inter inter);
 t_inter	check_inter_plan(int nb, t_pl *p, t_line l, t_inter inter);
 /* INTERSECTION */
@@ -417,13 +443,21 @@ t_color	ft_color_pixel(t_var *m, t_line line);
 void	ft_add_color_2(t_color *color, t_color shad);
 /* COLOR */
 
+/* MULTI THREADING ADDS */
+void	init_shared_data(t_var *m);
+void	*thread_routine(void *arg);
+void	thread_manager(t_var *m);
+void	ft_pixel_put(t_var *m, int i, int j, t_vec v);
+/* MULTI THREADING ADDS */
+
 /* OTHER */
 void	ft_display_struc_content(t_var *m);
 void	ft_debug_mat(t_mat m);
 bool	secure_glitch_cylinder(t_cy c, t_coord point);
 bool	in_sphere(t_sp s, t_coord point);
-bool	secure_glitch_plan(t_pl plan, t_coord point);
-bool	secure_glitch_sphere(t_sp s, t_coord point);
+bool	secure_glitch_plan(t_pl plan, t_coord point, float *dist);
+bool	secure_glitch_sphere(t_sp s, t_coord point, float *dist);
+bool	in_sphere_mem(float dist);
 int		ft_check_check(t_var *m, t_line l_line, float lg_segment);
 bool	check_light_inter_plan(t_var *m, t_line l, float coef);
 bool	check_light_inter_sph(t_var *m, t_line l, float coef);
