@@ -6,7 +6,7 @@
 /*   By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:58:04 by jrinna            #+#    #+#             */
-/*   Updated: 2022/07/20 16:26:04 by njaros           ###   ########lyon.fr   */
+/*   Updated: 2022/08/16 10:16:27 by njaros           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 bool	in_sphere_mem(float dist)
 {
-	if (dist < 0)
-		return (1);
-	return (0);
+	return (dist < 0);
 }
 
 int	ft_check_check(t_var *m, t_line l_line, float lg_segment)

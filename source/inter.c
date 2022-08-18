@@ -6,7 +6,7 @@
 /*   By: njaros <njaros@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:52:15 by njaros            #+#    #+#             */
-/*   Updated: 2022/07/20 16:28:16 by njaros           ###   ########lyon.fr   */
+/*   Updated: 2022/08/16 09:43:10 by njaros           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ bool	set_ex_s(t_inter *inter, t_line l, t_sp s, float mu)
 		inter->normal = crea_vector(inter->point, s.coord);
 	else
 		inter->normal = crea_vector(s.coord, inter->point);
+	ft_vec_normalization(&inter->normal);
 	inter->object = SPHERE;
 	return (1);
 }
@@ -69,7 +70,7 @@ t_inter	inter_sphere(t_line l, t_sp s)
 	inter.exist = 0;
 	normal = find_normal_line(l, s.coord, &inter.dist);
 	distance = ft_square_length(normal);
-	if (distance > (s.diam * s.diam))
+	if (distance - (s.diam * s.diam) / 4 > 0.001)
 		return (inter);
 	distance = sqrt(distance);
 	mu = (s.diam / 2) * sin(acos(distance / (s.diam / 2)));
